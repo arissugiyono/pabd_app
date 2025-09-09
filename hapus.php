@@ -1,17 +1,25 @@
-<?php 
+<?php
+session_start();
+if (!isset($_SESSION['login'])) {
+  header("Location: login.php");
+  exit;
+}
+
 require 'functions.php';
 
+//jika id tidak ada di URL
+if (!isset($_GET['id'])) {
+  header("location: index.php");
+  exit;
+}
 
-//mengambil id dari url 
-$id =$_GET['id'];
+//mengambil id dari url
+$id = $_GET['id'];
 
-
-//cek apakah tombol hapus sudah di klik
-  if(hapus($id))
-    {
-      echo"<script>
-            alert ('data berhasil di hapus');
-            document.location.href='index.php'
-            </script>";
-    };
-?>
+//cek apaah tombol hapus sudah di klik
+if (hapus($id) > 0) {
+  echo "<script>
+          alert ('data berhasil dihapus');
+          document.location.href='index.php';
+          </script>";
+}
